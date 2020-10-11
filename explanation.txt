@@ -1,0 +1,14 @@
+For all of our queries we implemented hash indices.
+
+For query 1, we built a hash table from the items records, creating our hashes from the sales date and employee.
+
+For query 2, we built a hashtable from the orders records, bucketing using the discount. We noticed that our dataset had discounts between 0 and 99 (inclusive). Therefore, by bucketing orders by discount we could quickly filter by discount, and reduce the orders table by a factor of 100 on average for query 2.
+
+For query 3, we used two hashtables, one for storing "store" data (hashing with the store manager ID and country ID), and one for items.
+
+We chose these columns for hashing as they were what we were using for the queries. 
+ 
+We used a hash index due to its fast lookup (O(1) provided no collisions, and if there are we implement chaining via a linked list) once it's been built, and it uses less data than some of the other index structures we considered like a bitmapped index.
+We did implement a bitmap index for query 3, but it was too slow for the microbenchmark.
+
+As an extension we measured the impact of the hash table size on query execution time for query 1 and query 3. The results of the experiment are in a file called "queryBenchmarkReport.pdf"
